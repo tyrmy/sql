@@ -3,7 +3,7 @@
 
 import random
 import time
-from sql_object import sql_object as SQL
+from sqlite import sqlite_object as SQL
 
 def str_time_prop(start, end, format, prop):
     stime = time.mktime(time.strptime(start, format))
@@ -36,10 +36,14 @@ def generate_random_bigdata(db, size):
 sql = SQL()
 sql.create_connection('sensordata.db')
 
-#sql.fetch_quary('SELECT * FROM sensor_readings')
-#sql.fetch_quary('SELECT DISTINCT * FROM sensor_readings ORDER BY date(date) DESC Limit 10')
-#sql.fetch_quary('SELECT DISTINCT * FROM sensor_readings ORDER BY time(time) DESC Limit 10')
-#sql.fetch_quary('SELECT * FROM sensor_readings ORDER BY date(date) DESC')
+#sql.print_quary('SELECT * FROM sensor_readings')
+#sql.print_quary('SELECT DISTINCT * FROM sensor_readings ORDER BY date(date) DESC Limit 10')
+#sql.print_quary('SELECT DISTINCT * FROM sensor_readings ORDER BY time(time) DESC Limit 10')
+#sql.print_quary('SELECT * FROM sensor_readings ORDER BY date(date) DESC')
+#sql.print_quary('SELECT COUNT(*), temperature FROM sensor_readings WHERE temperature = temperature GROUP BY temperature')
 #generate_random_bigdata(sql, 100)
-sql.read_sensordb()
+sql.print_all_from_table("sensor_readings")
+
+#sql.get_table_columns("sensor_readings")
+#sql.get_table_columns("sensors")
 sql.close_connection()
