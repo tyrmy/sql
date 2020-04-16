@@ -31,6 +31,23 @@ class sqlite_object:
         except Error as e:
             print("create_connection: {}".format(e))
 
+    def get_two_values(self, table, x, y):
+        """
+        Get two values as lists for plotting etc
+        """
+        try:
+            self.cur.execute('SELECT {value1},{value2} FROM {source} LIMIT 10'.format(value1=x, value2=y, source=table))
+            rows = self.cur.fetchall()
+
+            x = []
+            y = []
+            for row in rows:
+                x.append(row[0])
+                y.append(row[1])
+            return x, y
+        except Error as e:
+            print("get_two_values: {}".format(e))
+
     def print_topten(self, table_name):
         """
         Prints 10 latest rows of every column in database using PrettyTable

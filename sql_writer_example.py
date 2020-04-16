@@ -54,14 +54,8 @@ if __name__ == '__main__':
     sql = SQL()
     sql.create_connection('example.db')
 
-    #sql.print_quary('SELECT * FROM sensor_readings')
-    #sql.print_quary('SELECT DISTINCT * FROM sensor_readings ORDER BY date(date) DESC Limit 10')
-    #sql.print_quary('SELECT DISTINCT * FROM sensor_readings ORDER BY time(time) DESC Limit 10')
-    #sql.print_quary('SELECT * FROM sensor_readings ORDER BY date(date) DESC')
-    #sql.print_quary('SELECT COUNT(*), temperature FROM sensor_readings WHERE temperature = temperature GROUP BY temperature')
-    #generate_random_bigdata(sql, 100)
-    sql.print_all_from_table("sensor_readings")
+    x, y = sql.get_two_values("sensor_readings", "temperature", "time")
 
-    #sql.get_table_columns("sensor_readings")
-    #sql.get_table_columns("sensors")
+    print(x)
+    print(y)
     sql.close_connection()
