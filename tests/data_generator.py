@@ -6,7 +6,7 @@ A test script for generating random data to sqlite database
 """
 import random
 import time
-from sqlite import sqlite_object as SQL
+from sql.sqli_writer import sqlite_object as SQL
 
 def str_time_prop(start, end, format, prop):
     """
