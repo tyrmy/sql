@@ -7,8 +7,10 @@ A basic sqlite3-Python interface. Includes printing options for CLI.
 
 import os
 from sqlite_base import sql_base as base
+from sqlite3 import Error
 
 from prettytable import PrettyTable
+from prettytable import from_db_cursor
 
 from time import sleep
 from datetime import datetime
@@ -23,7 +25,7 @@ class sqlite_cli(base):
             self.get_state()
             print("--------\n")
             print("{}".format(datetime.now()))
-            sleep(30)
+            sleep(10)
 
     def get_state(self):
         os.system('clear')
@@ -49,13 +51,7 @@ class sqlite_cli(base):
             try:
                 print(table.upper())
                 self.cur.execute('SELECT * FROM {} ORDER BY id DESC LIMIT 5'.format(table))
-                rows = self.cur.fetchall()
-                if len(rows) == 0:
-                    print('no values')
-                    continue
-                t = PrettyTable(dict(rows[0]).keys())
-                for row in rows:
-                    t.add_row(dict(row).values())
+                t = from_db_cursor(self.cur)
                 print(t)
             except Error as e:
                 print("print_latest: {}".format(e))
@@ -89,10 +85,7 @@ class sqlite_cli(base):
         """ Prints all rows of every column in database using PrettyTable """
         try:
             self.cur.execute('SELECT * FROM {}'.format(table_name))
-            rows = self.cur.fetchall()
-            t = PrettyTable(dict(rows[0]).keys())
-            for row in rows:
-                t.add_row(dict(row).values())
+            t = from_db_cursor(self.cur)
             print(t)
         except Error as e:
             print("print_all_from_table: {}".format(e))
